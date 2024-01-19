@@ -1,6 +1,6 @@
 package benediktvitek.javajobsearcher.Utils.URLBuilders;
 
-import benediktvitek.javajobsearcher.Utils.Country;
+import benediktvitek.javajobsearcher.Utils.Enums.Country;
 
 public class GlassDoorURLBuilder extends URLBuilder {
 

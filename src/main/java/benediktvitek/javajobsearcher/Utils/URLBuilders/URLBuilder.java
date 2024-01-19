@@ -1,8 +1,6 @@
 package benediktvitek.javajobsearcher.Utils.URLBuilders;
 
-import benediktvitek.javajobsearcher.Utils.Country;
-
-import java.net.URL;
+import benediktvitek.javajobsearcher.Utils.Enums.Country;
 
 public abstract class URLBuilder {
 
