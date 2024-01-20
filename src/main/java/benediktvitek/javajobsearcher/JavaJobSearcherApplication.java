@@ -1,9 +1,11 @@
 package benediktvitek.javajobsearcher;
 
-import benediktvitek.javajobsearcher.Repositories.TestModelRepository;
+import benediktvitek.javajobsearcher.Utils.Parsers.JobStackResponseParser;
 import benediktvitek.javajobsearcher.Utils.WebScrapers.GlassDoorsWebScraper;
+import benediktvitek.javajobsearcher.Utils.WebScrapers.JobStackScraper;
 import benediktvitek.javajobsearcher.Utils.WebScrapers.WebScraper;
 import lombok.RequiredArgsConstructor;
+import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,9 +15,7 @@ import java.util.List;
 
 @SpringBootApplication
 @RequiredArgsConstructor
-public class JavaJobSearcherApplication implements CommandLineRunner {
-
-    private final TestModelRepository testModelRepository;
+public class JavaJobSearcherApplication{
 
     public static void main(String[] args) throws IOException {
         SpringApplication.run(JavaJobSearcherApplication.class, args);
@@ -23,12 +23,11 @@ public class JavaJobSearcherApplication implements CommandLineRunner {
 
         GlassDoorsWebScraper glass = new GlassDoorsWebScraper();
         List<String> positions = glass.getParsedResponse();
-
         System.out.println(positions);
+        WebScraper jobStack = new JobStackScraper("https://www.jobstack.it/it-jobs?keywords=junior%20java%20developer&isDetail=1&page=26",
+                HttpClients.createDefault(), new JobStackResponseParser());
+
+        System.out.println(jobStack.getParsedResponse());
     }
 
-    @Override
-    public void run(String... args) throws Exception {
-        testModelRepository.save(new TestModel("Franta", 15));
-    }
 }

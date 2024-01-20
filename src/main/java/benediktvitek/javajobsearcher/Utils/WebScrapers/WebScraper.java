@@ -18,5 +18,5 @@ public abstract class WebScraper {
         URL = url;
     }
 
-    public abstract List<String> getParsedResponse();
+    public abstract List<String> getParsedResponse() throws IOException;
 }
