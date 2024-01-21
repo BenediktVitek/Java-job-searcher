@@ -1,4 +1,4 @@
-package benediktvitek.javajobsearcher.Utils.WebScrapers;
+package benediktvitek.javajobsearcher.utils.webscrapers;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;

@@ -1,4 +1,4 @@
-package benediktvitek.javajobsearcher.Utils.Parsers;
+package benediktvitek.javajobsearcher.utils.parsers;
 
 import java.util.List;
 

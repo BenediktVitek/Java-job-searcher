@@ -1,4 +1,4 @@
-package benediktvitek.javajobsearcher.Utils.Enums;
+package benediktvitek.javajobsearcher.utils.enums;
 
 //Opened for grow
 public enum Country {

@@ -1,6 +1,6 @@
-package benediktvitek.javajobsearcher.Utils.WebScrapers;
+package benediktvitek.javajobsearcher.utils.webscrapers;
 
-import benediktvitek.javajobsearcher.Utils.Parsers.JobStackResponseParser;
+import benediktvitek.javajobsearcher.utils.parsers.JobStackResponseParser;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.impl.classic.BasicHttpClientResponseHandler;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;

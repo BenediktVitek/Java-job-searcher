@@ -1,6 +1,5 @@
-package benediktvitek.javajobsearcher.Utils.WebScrapers;
+package benediktvitek.javajobsearcher.utils.webscrapers;
 
-import benediktvitek.javajobsearcher.Utils.Parsers.ResponseParser;
 
 import java.io.BufferedReader;
 import java.io.IOException;

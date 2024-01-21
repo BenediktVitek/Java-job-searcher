@@ -1,13 +1,10 @@
-package benediktvitek.javajobsearcher.Utils.WebScrapers;
+package benediktvitek.javajobsearcher.utils.webscrapers;
 
-import benediktvitek.javajobsearcher.Utils.Enums.Country;
-import benediktvitek.javajobsearcher.Utils.URLBuilders.GlassDoorURLBuilder;
-import io.github.bonigarcia.wdm.WebDriverManager;
+
+import benediktvitek.javajobsearcher.utils.enums.Country;
+import benediktvitek.javajobsearcher.utils.urlbuilders.GlassDoorURLBuilder;
 import org.openqa.selenium.*;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+
 
 import java.time.Duration;
 import java.util.ArrayList;
