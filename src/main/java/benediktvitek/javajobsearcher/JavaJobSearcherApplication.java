@@ -11,23 +11,24 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootApplication
 @RequiredArgsConstructor
-public class JavaJobSearcherApplication{
+public class JavaJobSearcherApplication {
 
     public static void main(String[] args) throws IOException {
         SpringApplication.run(JavaJobSearcherApplication.class, args);
 
 
-        GlassDoorsWebScraper glass = new GlassDoorsWebScraper();
-        List<String> positions = glass.getParsedResponse();
-        System.out.println(positions);
-        WebScraper jobStack = new JobStackScraper("https://www.jobstack.it/it-jobs?keywords=junior%20java%20developer&isDetail=1&page=26",
-                HttpClients.createDefault(), new JobStackResponseParser());
+//        GlassDoorsWebScraper glass = new GlassDoorsWebScraper();
+//        List<String> positions = glass.getParsedResponse();
+//        System.out.println(positions);
+        JobStackScraper jobStack = new JobStackScraper("https://www.jobstack.it/it-jobs?keywords=junior%20java%20developer&isDetail=1",
+                new JobStackResponseParser());
 
-        System.out.println(jobStack.getParsedResponse());
+        jobStack.getParsedResponseTest(new ArrayList<>(), "https://www.jobstack.it/it-jobs?keywords=junior%20java%20developer&isDetail=1");
     }
 
 }
