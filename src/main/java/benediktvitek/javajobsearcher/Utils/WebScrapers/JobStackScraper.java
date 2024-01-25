@@ -61,17 +61,16 @@ public class JobStackScraper extends HttpClientWebScraper {
         return offers;
     }
 
-    private String scrapeSingleOffer(String url) throws IOException {
+    private String scrapeSingleOffer(String url) {
 
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             HttpGet httpGet = new HttpGet("https://www.jobstack.it" + url);
             HttpClientResponseHandler<String> responseHandler = new BasicHttpClientResponseHandler();
-            String response = httpClient.execute(httpGet, responseHandler);
-            return response;
+            return httpClient.execute(httpGet, responseHandler);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.err.println("An error occurred while scraping the offer: " + e.getMessage());
+            return "";
         }
-        return "";
     }
 
     public List<String> getAllUrls() {
@@ -85,7 +84,7 @@ public class JobStackScraper extends HttpClientWebScraper {
         jobStackOfferRepository.save(new JobStackOffer(offerUrl));
     }
 
-    public List<String> findNewOffers(List<String> offerLinks) throws IOException {
+    public List<String> findNewOffers(List<String> offerLinks) {
 
         List<String> oldOffers = getAllUrls();
 
@@ -103,12 +102,12 @@ public class JobStackScraper extends HttpClientWebScraper {
         List<String> offerLinks = getOfferLinks(URL);
         List<String> newOffers = findNewOffers(offerLinks);
         List<String> validOffers = new ArrayList<>();
-        for(String offer : newOffers) {
-            System.out.println(offer);
-            String parsedOffer = scrapeSingleOffer(offer);
-            System.out.println(offer);
-            if(jobStackResponseParser.isSuitable(parsedOffer)) {
-                validOffers.add(jobStackResponseParser.buildMessage(parsedOffer, offer));
+        for (String offerUrl : newOffers) {
+            String parsedOffer = scrapeSingleOffer(offerUrl);
+            if (jobStackResponseParser.isSuitable(parsedOffer)) {
+                String message = jobStackResponseParser.buildMessage(parsedOffer, offerUrl);
+                System.out.println(message);
+                validOffers.add(message);
             }
         }
 

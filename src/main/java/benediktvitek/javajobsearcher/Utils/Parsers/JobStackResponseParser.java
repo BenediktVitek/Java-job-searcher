@@ -15,19 +15,23 @@ public class JobStackResponseParser extends ResponseParser {
     @Override
     public String buildMessage(String offer, String path) {
         Document document = Jsoup.parse(offer);
-        return document.select("jobpost-h2-2032\n").text().concat(DOMAIN + path);
+        return document.select(".jobpost-h1-2023").text().concat("\n" + DOMAIN + path);
     }
 
 
     @Override
     public boolean isSuitable(String offer) {
 
+        if (offer == null || offer.isEmpty()) {
+            return false;
+        }
+
         String responseParts = "";
         Document document = Jsoup.parse(offer);
-        Elements headerLabels = document.select("jobpost-values-2023");
-        Elements description = document.select("custom-profile-intro-box custom-profile-intro-box--left jobpost-description-2023");
+        Elements headerLabels = document.select(".jobpost-values-2023");
+        Elements description = document.select(".custom-profile-intro-box.custom-profile-intro-box--left.jobpost-description-2023");
         responseParts = responseParts.concat(headerLabels.text()).concat(description.text());
 
-        return responseParts.contains("Junior") && responseParts.contains("Java");
+        return responseParts.matches(".*\\b[Jj]ava[^a-zA-Z]*[Jj]unior\\b.*|.*\\b[Jj]unior[^a-zA-Z]*[Jj]ava\\b.*");
     }
 }
