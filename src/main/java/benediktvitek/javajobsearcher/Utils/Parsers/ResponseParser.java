@@ -4,5 +4,7 @@ import java.util.List;
 
 public abstract class ResponseParser {
 
-    public abstract List<String> getJobDetails(String response);
+    public abstract String buildMessage(String offer, String url);
+
+    public abstract boolean isSuitable(String offer);
 }

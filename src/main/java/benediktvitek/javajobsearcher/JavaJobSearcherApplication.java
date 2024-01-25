@@ -28,7 +28,7 @@ public class JavaJobSearcherApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
         List<WebScraper> webScrapers = webScraperFactory.getWebScrapers();
         for (WebScraper scraper: webScrapers) {
-            scraper.getJobOffers();
+            System.out.println(scraper.getJobOffers());
         }
     }
 }

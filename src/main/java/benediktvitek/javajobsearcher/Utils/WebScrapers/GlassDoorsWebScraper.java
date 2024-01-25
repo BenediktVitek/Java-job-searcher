@@ -2,6 +2,8 @@ package benediktvitek.javajobsearcher.utils.webscrapers;
 
 
 import org.openqa.selenium.*;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 
 import java.time.Duration;
@@ -10,9 +12,10 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Component
 public class GlassDoorsWebScraper extends SeleniumWebScraper {
 
-    public GlassDoorsWebScraper(String url) {
+    public GlassDoorsWebScraper(@Value("${glassdoors.site.url}") String url) {
         super(url);
     }
 

@@ -8,6 +8,10 @@ public abstract class WebScraper {
 
     protected final String URL;
 
+    public String getURL() {
+        return URL;
+    }
+
     public WebScraper(String url) {
         URL = url;
     }

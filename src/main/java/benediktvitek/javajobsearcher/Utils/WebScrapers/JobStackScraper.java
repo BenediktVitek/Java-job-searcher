@@ -1,30 +1,41 @@
 package benediktvitek.javajobsearcher.utils.webscrapers;
 
+import benediktvitek.javajobsearcher.entities.JobStackOffer;
+import benediktvitek.javajobsearcher.repositories.JobStackOfferRepository;
 import benediktvitek.javajobsearcher.utils.parsers.JobStackResponseParser;
+import benediktvitek.javajobsearcher.utils.parsers.ResponseParser;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.impl.classic.BasicHttpClientResponseHandler;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
-import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.core5.http.io.HttpClientResponseHandler;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+@Component
 public class JobStackScraper extends HttpClientWebScraper {
 
-    private static final JobStackResponseParser jobStackResponseParser = new JobStackResponseParser();
+    private final JobStackOfferRepository jobStackOfferRepository;
+    private final JobStackResponseParser jobStackResponseParser;
 
-    public JobStackScraper(String url) {
-        super(url, jobStackResponseParser);
+    public JobStackScraper(@Value("${jobstack.site.url}") String url, ResponseParser responseParser,
+                           JobStackOfferRepository jobStackOfferRepository,
+                           JobStackResponseParser jobStackResponseParser) {
+        super(url, responseParser);
+        this.jobStackOfferRepository = jobStackOfferRepository;
+        this.jobStackResponseParser = jobStackResponseParser;
     }
 
-    public List<String> getParsedResponseTest(String url) throws IOException {
+    private List<String> getOfferLinks(String url) throws IOException {
         List<String> offers = new ArrayList<>();
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             HttpGet httpGet = new HttpGet(url);
@@ -36,15 +47,12 @@ public class JobStackScraper extends HttpClientWebScraper {
 
             for (Element link : hrefs) {
                 offers.add(link.attr("href"));
-                System.out.println(link.attr("href"));
             }
 
             Elements nextPageLink = document.select("#page_next a");
             if (!nextPageLink.isEmpty()) {
                 String nextPageUrl = nextPageLink.get(0).attr("href");
-                offers.addAll(getParsedResponseTest("https://www.jobstack.it" + nextPageUrl));
-
-                System.out.println(nextPageUrl);
+                offers.addAll(getOfferLinks("https://www.jobstack.it" + nextPageUrl));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -53,8 +61,57 @@ public class JobStackScraper extends HttpClientWebScraper {
         return offers;
     }
 
+    private String scrapeSingleOffer(String url) throws IOException {
+
+        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
+            HttpGet httpGet = new HttpGet("https://www.jobstack.it" + url);
+            HttpClientResponseHandler<String> responseHandler = new BasicHttpClientResponseHandler();
+            String response = httpClient.execute(httpGet, responseHandler);
+            return response;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return "";
+    }
+
+    public List<String> getAllUrls() {
+        return jobStackOfferRepository.findAll()
+                .stream()
+                .map(jobStackOffer -> jobStackOffer.getLink())
+                .collect(Collectors.toList());
+    }
+
+    public void saveNew(String offerUrl) {
+        jobStackOfferRepository.save(new JobStackOffer(offerUrl));
+    }
+
+    public List<String> findNewOffers(List<String> offerLinks) throws IOException {
+
+        List<String> oldOffers = getAllUrls();
+
+        offerLinks.removeAll(oldOffers);
+
+        for (String offer : offerLinks) {
+            saveNew(offer);
+        }
+
+        return offerLinks;
+    }
+
     @Override
     public List<String> getJobOffers() throws IOException {
-        return getParsedResponseTest(URL);
+        List<String> offerLinks = getOfferLinks(URL);
+        List<String> newOffers = findNewOffers(offerLinks);
+        List<String> validOffers = new ArrayList<>();
+        for(String offer : newOffers) {
+            System.out.println(offer);
+            String parsedOffer = scrapeSingleOffer(offer);
+            System.out.println(offer);
+            if(jobStackResponseParser.isSuitable(parsedOffer)) {
+                validOffers.add(jobStackResponseParser.buildMessage(parsedOffer, offer));
+            }
+        }
+
+        return validOffers;
     }
 }
