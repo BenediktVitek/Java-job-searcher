@@ -1,8 +1,6 @@
 package benediktvitek.javajobsearcher.utils.webscrapers;
 
 
-import benediktvitek.javajobsearcher.utils.enums.Country;
-import benediktvitek.javajobsearcher.utils.urlbuilders.GlassDoorURLBuilder;
 import org.openqa.selenium.*;
 
 
@@ -14,12 +12,12 @@ import java.util.regex.Pattern;
 
 public class GlassDoorsWebScraper extends SeleniumWebScraper {
 
-    public GlassDoorsWebScraper() {
-        super(new GlassDoorURLBuilder("Java junior developer", Country.CZECH_REPUBLIC, 1).getURL());
+    public GlassDoorsWebScraper(String url) {
+        super(url);
     }
 
     @Override
-    public List<String> getParsedResponse() {
+    public List<String> getJobOffers() {
         Integer numberOfJobs = null;
 
         List<String> positionDetails = new ArrayList<>();

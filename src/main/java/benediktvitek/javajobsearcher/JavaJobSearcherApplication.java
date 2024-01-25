@@ -1,29 +1,34 @@
 package benediktvitek.javajobsearcher;
 import benediktvitek.javajobsearcher.utils.parsers.JobStackResponseParser;
 import benediktvitek.javajobsearcher.utils.webscrapers.JobStackScraper;
+import benediktvitek.javajobsearcher.utils.webscrapers.WebScraper;
+import benediktvitek.javajobsearcher.utils.webscrapers.factories.WebScraperFactory;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 @SpringBootApplication
 @RequiredArgsConstructor
-public class JavaJobSearcherApplication {
+public class JavaJobSearcherApplication implements CommandLineRunner {
 
-    public static void main(String[] args) throws IOException {
+    private final WebScraperFactory webScraperFactory;
+    public static void main(String[] args) {
         SpringApplication.run(JavaJobSearcherApplication.class, args);
 
-
-//        GlassDoorsWebScraper glass = new GlassDoorsWebScraper();
-//        List<String> positions = glass.getParsedResponse();
-//        System.out.println(positions);
-        JobStackScraper jobStack = new JobStackScraper("https://www.jobstack.it/it-jobs?keywords=junior%20java%20developer&isDetail=1",
-                new JobStackResponseParser());
-
-        jobStack.getParsedResponseTest(new ArrayList<>(), "https://www.jobstack.it/it-jobs?keywords=junior%20java%20developer&isDetail=1");
     }
 
+    @Override
+    public void run(String... args) throws Exception {
+        List<WebScraper> webScrapers = webScraperFactory.getWebScrapers();
+        for (WebScraper scraper: webScrapers) {
+            scraper.getJobOffers();
+        }
+    }
 }

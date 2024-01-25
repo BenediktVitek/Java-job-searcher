@@ -18,12 +18,14 @@ import java.util.List;
 
 public class JobStackScraper extends HttpClientWebScraper {
 
-    public JobStackScraper(String url, JobStackResponseParser responseParser) {
-        super(url, responseParser);
+    private static final JobStackResponseParser jobStackResponseParser = new JobStackResponseParser();
+
+    public JobStackScraper(String url) {
+        super(url, jobStackResponseParser);
     }
 
-
-    public List<String> getParsedResponseTest(List<String> offers, String url) throws IOException {
+    public List<String> getParsedResponseTest(String url) throws IOException {
+        List<String> offers = new ArrayList<>();
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             HttpGet httpGet = new HttpGet(url);
             HttpClientResponseHandler<String> responseHandler = new BasicHttpClientResponseHandler();
@@ -40,7 +42,7 @@ public class JobStackScraper extends HttpClientWebScraper {
             Elements nextPageLink = document.select("#page_next a");
             if (!nextPageLink.isEmpty()) {
                 String nextPageUrl = nextPageLink.get(0).attr("href");
-                offers.addAll(getParsedResponseTest(new ArrayList<>(), "https://www.jobstack.it" + nextPageUrl));
+                offers.addAll(getParsedResponseTest("https://www.jobstack.it" + nextPageUrl));
 
                 System.out.println(nextPageUrl);
             }
@@ -52,7 +54,7 @@ public class JobStackScraper extends HttpClientWebScraper {
     }
 
     @Override
-    public List<String> getParsedResponse() throws IOException {
-        return null;
+    public List<String> getJobOffers() throws IOException {
+        return getParsedResponseTest(URL);
     }
 }
