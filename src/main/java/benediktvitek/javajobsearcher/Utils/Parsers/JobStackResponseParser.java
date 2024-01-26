@@ -32,6 +32,6 @@ public class JobStackResponseParser extends ResponseParser {
         Elements description = document.select(".custom-profile-intro-box.custom-profile-intro-box--left.jobpost-description-2023");
         responseParts = responseParts.concat(headerLabels.text()).concat(description.text());
 
-        return responseParts.matches(".*\\b[Jj]ava[^a-zA-Z]*[Jj]unior\\b.*|.*\\b[Jj]unior[^a-zA-Z]*[Jj]ava\\b.*");
+        return responseParts.matches(".*\\b[Jj]ava[^a-zA-Z].*[Jj]unior\\b.*|.*\\b[Jj]unior[^a-zA-Z].*[Jj]ava\\b.*");
     }
 }
