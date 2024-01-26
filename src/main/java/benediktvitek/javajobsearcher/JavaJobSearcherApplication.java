@@ -1,17 +1,12 @@
 package benediktvitek.javajobsearcher;
-import benediktvitek.javajobsearcher.utils.parsers.JobStackResponseParser;
-import benediktvitek.javajobsearcher.utils.webscrapers.JobStackScraper;
 import benediktvitek.javajobsearcher.utils.webscrapers.WebScraper;
 import benediktvitek.javajobsearcher.utils.webscrapers.factories.WebScraperFactory;
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootApplication

@@ -3,7 +3,6 @@ package benediktvitek.javajobsearcher.utils.webscrapers;
 import benediktvitek.javajobsearcher.entities.JobStackOffer;
 import benediktvitek.javajobsearcher.repositories.JobStackOfferRepository;
 import benediktvitek.javajobsearcher.utils.parsers.JobStackResponseParser;
-import benediktvitek.javajobsearcher.utils.parsers.ResponseParser;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.impl.classic.BasicHttpClientResponseHandler;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
@@ -22,17 +21,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class JobStackScraper extends HttpClientWebScraper {
+public class JobStackWebScraper extends HttpClientWebScraper {
 
     private final JobStackOfferRepository jobStackOfferRepository;
-    private final JobStackResponseParser jobStackResponseParser;
 
-    public JobStackScraper(@Value("${jobstack.site.url}") String url, ResponseParser responseParser,
-                           JobStackOfferRepository jobStackOfferRepository,
-                           JobStackResponseParser jobStackResponseParser) {
-        super(url, responseParser);
+    public JobStackWebScraper(@Value("${jobstack.site.url}") String url,
+                              JobStackOfferRepository jobStackOfferRepository,
+                              JobStackResponseParser jobStackResponseParser) {
+        super(url, jobStackResponseParser);
         this.jobStackOfferRepository = jobStackOfferRepository;
-        this.jobStackResponseParser = jobStackResponseParser;
     }
 
     private List<String> getOfferLinks(String url) throws IOException {
@@ -104,8 +101,8 @@ public class JobStackScraper extends HttpClientWebScraper {
         List<String> validOffers = new ArrayList<>();
         for (String offerUrl : newOffers) {
             String parsedOffer = scrapeSingleOffer(offerUrl);
-            if (jobStackResponseParser.isSuitable(parsedOffer)) {
-                String message = jobStackResponseParser.buildMessage(parsedOffer, offerUrl);
+            if (responseParser.isSuitable(parsedOffer)) {
+                String message = responseParser.buildMessage(parsedOffer, offerUrl);
                 System.out.println(message);
                 validOffers.add(message);
             }
