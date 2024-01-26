@@ -28,17 +28,6 @@ public class JobStackWebScraper extends HttpClientWebScraper {
         this.jobStackResponseParser = jobStackResponseParser;
     }
 
-    private String scrapePage(String url) {
-        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
-            HttpGet httpGet = new HttpGet(url);
-            HttpClientResponseHandler<String> responseHandler = new BasicHttpClientResponseHandler();
-            return httpClient.execute(httpGet, responseHandler);
-        } catch (Exception e) {
-            System.err.println("An error occurred while scraping the offer: " + e.getMessage());
-            return "";
-        }
-    }
-
     private List<String> getOfferLinks(String url) {
         List<String> offers = new ArrayList<>();
         String pageView = scrapePage(url);
