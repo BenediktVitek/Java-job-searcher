@@ -5,11 +5,11 @@ import benediktvitek.javajobsearcher.utils.parsers.ResponseParser;
 
 public abstract class HttpClientWebScraper extends WebScraper{
 
-    protected final ResponseParser responseParser;
+    private final ResponseParser jobstackResponseParser;
 
     public HttpClientWebScraper(String url,ResponseParser responseParser) {
         super(url);
-        this.responseParser = responseParser;
+        this.jobstackResponseParser = responseParser;
     }
 
 }
