@@ -1,5 +1,6 @@
 package benediktvitek.javajobsearcher;
 
+import benediktvitek.javajobsearcher.Utils.WebScrapers.SeleniumScrapers.SeleniumWebDriverSingleton;
 import benediktvitek.javajobsearcher.Utils.WebScrapers.WebScraper;
 import benediktvitek.javajobsearcher.Utils.WebScrapers.factories.WebScraperFactory;
 import lombok.RequiredArgsConstructor;
@@ -23,8 +24,12 @@ public class JavaJobSearcherApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         List<WebScraper> webScrapers =  webScraperFactory.getWebScrapers();
-        for (WebScraper scraper: webScrapers) {
-            System.out.println(scraper.getJobOffers());
+        try{
+            for (WebScraper scraper: webScrapers) {
+                System.out.println(scraper.getJobOffers());
+            }
+        } finally {
+            SeleniumWebDriverSingleton.closeWebDriver();
         }
     }
 }

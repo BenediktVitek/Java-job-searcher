@@ -1,11 +1,10 @@
-package benediktvitek.javajobsearcher.Utils.WebScrapers;
+package benediktvitek.javajobsearcher.Utils.WebScrapers.SeleniumScrapers;
 
 import org.openqa.selenium.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -24,30 +23,26 @@ public class GlassDoorsWebScraper extends SeleniumWebScraper {
 
         List<String> positionDetails = new ArrayList<>();
 
-        //Closing web driver in case anything goes bad
-        try {
-            //Find out if there are no new jobs or small number of them. Unwanted job offers appear in that case
-            List<WebElement> descriptionElements = webDriver.findElements(By.id("lrp-zrp-heading_Description"));
+        //Find out if there are no new jobs or small number of them. Unwanted job offers appear in that case
+        List<WebElement> descriptionElements = webDriver.findElements(By.id("lrp-zrp-heading_Description"));
 
 
-            if (!descriptionElements.isEmpty()) {
-                numberOfJobs = getNumberOfJobs(descriptionElements.get(0).getText());
-                if (numberOfJobs == 0) {
-                    positionDetails.add("No new offers on: https://www.glassdoors.com ");
-                    return positionDetails;
-                }
+        if (!descriptionElements.isEmpty()) {
+            numberOfJobs = getNumberOfJobs(descriptionElements.get(0).getText());
+            if (numberOfJobs == 0) {
+                positionDetails.add("No new offers found: https://www.glassdoors.com ");
+                return positionDetails;
             }
-
-            List<WebElement> elements = webDriver.findElements(By.className("JobsList_jobListItem__JBBUV"));
-
-            if (numberOfJobs == null) {
-                positionDetails = loopUsingForEach(elements);
-            } else {
-                positionDetails = loopUsingForILoop(elements, numberOfJobs);
-            }
-        } finally {
-            closeWebDriver();
         }
+
+        List<WebElement> elements = webDriver.findElements(By.className("JobsList_jobListItem__JBBUV"));
+
+        if (numberOfJobs == null) {
+            positionDetails = loopUsingForEach(elements);
+        } else {
+            positionDetails = loopUsingForILoop(elements, numberOfJobs);
+        }
+
 
         return positionDetails;
     }
@@ -77,6 +72,9 @@ public class GlassDoorsWebScraper extends SeleniumWebScraper {
             if (offer.isDisplayed()) {
                 jobOffers.add(buildMessage(offer));
             }
+        }
+        if(jobOffers.isEmpty()) {
+            jobOffers.add("No new offers found: https://www.glassdoors.com ");
         }
         return jobOffers;
     }

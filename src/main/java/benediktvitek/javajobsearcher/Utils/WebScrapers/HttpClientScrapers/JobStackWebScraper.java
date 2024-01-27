@@ -1,6 +1,7 @@
-package benediktvitek.javajobsearcher.Utils.WebScrapers;
+package benediktvitek.javajobsearcher.Utils.WebScrapers.HttpClientScrapers;
 
 import benediktvitek.javajobsearcher.Utils.Parsers.JobStackResponseParser;
+import benediktvitek.javajobsearcher.Utils.WebScrapers.HttpClientScrapers.HttpClientWebScraper;
 import benediktvitek.javajobsearcher.services.JobStackOfferService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

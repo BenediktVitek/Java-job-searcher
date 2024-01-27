@@ -1,4 +1,4 @@
-package benediktvitek.javajobsearcher.Utils.WebScrapers;
+package benediktvitek.javajobsearcher.Utils.WebScrapers.SeleniumScrapers;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
@@ -7,32 +7,32 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.List;
 
-public abstract class SeleniumWebScraper extends WebScraper {
+public class SeleniumWebDriverSingleton {
 
-    protected WebDriverWait wait;
-    protected WebDriver webDriver;
+    private static WebDriver webDriver;
 
-    public SeleniumWebScraper(String url) {
-        super(url);
-        initializeWebDriver();
+    private SeleniumWebDriverSingleton() {
     }
 
-    private void initializeWebDriver() {
+    public static synchronized WebDriver getWebDriver() {
+        if (webDriver == null) {
+            initializeWebDriver();
+        }
+        return webDriver;
+    }
 
+    private static void initializeWebDriver() {
         WebDriverManager.firefoxdriver().setup();
         FirefoxOptions options = new FirefoxOptions();
         options.addArguments("-headless");
         webDriver = new FirefoxDriver(options);
-        wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
-        webDriver.get(URL);
     }
 
-    public void closeWebDriver() {
+    public static synchronized void closeWebDriver() {
         if (webDriver != null) {
             webDriver.quit();
+            webDriver = null;
         }
     }
 }
