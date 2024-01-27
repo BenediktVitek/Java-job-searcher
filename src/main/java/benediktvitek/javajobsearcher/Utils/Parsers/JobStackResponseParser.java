@@ -21,14 +21,14 @@ public class JobStackResponseParser extends ResponseParser {
     }
 
     @Override
-    public boolean isSuitable(String offer) {
+    public boolean isSuitable(String offerView) {
 
-        if (offer == null || offer.isEmpty()) {
+        if (offerView == null || offerView.isEmpty()) {
             return false;
         }
 
         String responseParts = "";
-        Document document = Jsoup.parse(offer);
+        Document document = Jsoup.parse(offerView);
         Elements headerLabels = document.select(".jobpost-values-2023");
         Elements description = document.select(".custom-profile-intro-box.custom-profile-intro-box--left.jobpost-description-2023");
         responseParts = responseParts.concat(headerLabels.text()).concat(description.text());

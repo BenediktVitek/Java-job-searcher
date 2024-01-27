@@ -8,6 +8,8 @@ import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.core5.http.io.HttpClientResponseHandler;
 
+import java.util.List;
+
 public abstract class HttpClientWebScraper extends WebScraper {
 
     private final ResponseParser jobstackResponseParser;
@@ -17,7 +19,9 @@ public abstract class HttpClientWebScraper extends WebScraper {
         this.jobstackResponseParser = responseParser;
     }
 
-    protected String scrapePage(String url) {
+    protected abstract List<String> getOfferLinks(String url);
+
+    protected String getPageView(String url) {
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             HttpGet httpGet = new HttpGet(url);
             HttpClientResponseHandler<String> responseHandler = new BasicHttpClientResponseHandler();

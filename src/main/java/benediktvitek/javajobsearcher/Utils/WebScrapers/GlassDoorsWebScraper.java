@@ -34,7 +34,7 @@ public class GlassDoorsWebScraper extends SeleniumWebScraper {
             if (!descriptionElements.isEmpty()) {
                 numberOfJobs = getNumberOfJobs(descriptionElements.get(0).getText());
                 if (numberOfJobs == 0) {
-                    positionDetails.add("No new positions on Glassdoor found");
+                    positionDetails.add("No new offers on: https://www.glassdoors.com ");
                     return positionDetails;
                 }
             }
