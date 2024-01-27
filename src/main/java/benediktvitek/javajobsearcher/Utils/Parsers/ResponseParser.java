@@ -1,4 +1,4 @@
-package benediktvitek.javajobsearcher.utils.parsers;
+package benediktvitek.javajobsearcher.Utils.Parsers;
 
 import org.springframework.stereotype.Component;
 

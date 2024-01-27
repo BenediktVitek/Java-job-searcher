@@ -1,5 +1,4 @@
-package benediktvitek.javajobsearcher.utils.webscrapers;
-
+package benediktvitek.javajobsearcher.Utils.WebScrapers;
 
 import java.io.IOException;
 import java.util.List;

@@ -1,7 +1,6 @@
-package benediktvitek.javajobsearcher.utils.webscrapers;
+package benediktvitek.javajobsearcher.Utils.WebScrapers;
 
-import benediktvitek.javajobsearcher.utils.parsers.JobsCzResponseParser;
-
+import benediktvitek.javajobsearcher.Utils.Parsers.JobsCzResponseParser;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 

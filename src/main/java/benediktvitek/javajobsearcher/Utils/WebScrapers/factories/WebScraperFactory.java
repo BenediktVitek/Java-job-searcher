@@ -1,9 +1,9 @@
-package benediktvitek.javajobsearcher.utils.webscrapers.factories;
+package benediktvitek.javajobsearcher.Utils.WebScrapers.factories;
 
-import benediktvitek.javajobsearcher.utils.webscrapers.GlassDoorsWebScraper;
-import benediktvitek.javajobsearcher.utils.webscrapers.JobStackWebScraper;
-import benediktvitek.javajobsearcher.utils.webscrapers.JobsCzWebScraper;
-import benediktvitek.javajobsearcher.utils.webscrapers.WebScraper;
+import benediktvitek.javajobsearcher.Utils.WebScrapers.GlassDoorsWebScraper;
+import benediktvitek.javajobsearcher.Utils.WebScrapers.JobStackWebScraper;
+import benediktvitek.javajobsearcher.Utils.WebScrapers.JobsCzWebScraper;
+import benediktvitek.javajobsearcher.Utils.WebScrapers.WebScraper;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

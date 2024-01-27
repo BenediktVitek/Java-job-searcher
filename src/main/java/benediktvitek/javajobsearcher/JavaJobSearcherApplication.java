@@ -1,6 +1,7 @@
 package benediktvitek.javajobsearcher;
-import benediktvitek.javajobsearcher.utils.webscrapers.WebScraper;
-import benediktvitek.javajobsearcher.utils.webscrapers.factories.WebScraperFactory;
+
+import benediktvitek.javajobsearcher.Utils.WebScrapers.WebScraper;
+import benediktvitek.javajobsearcher.Utils.WebScrapers.factories.WebScraperFactory;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.boot.CommandLineRunner;
@@ -21,7 +22,7 @@ public class JavaJobSearcherApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        List<WebScraper> webScrapers = webScraperFactory.getWebScrapers();
+        List<WebScraper> webScrapers =  webScraperFactory.getWebScrapers();
         for (WebScraper scraper: webScrapers) {
             System.out.println(scraper.getJobOffers());
         }

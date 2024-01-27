@@ -1,5 +1,4 @@
-package benediktvitek.javajobsearcher.utils.webscrapers;
-
+package benediktvitek.javajobsearcher.Utils.WebScrapers;
 
 import org.openqa.selenium.*;
 import org.springframework.beans.factory.annotation.Value;
