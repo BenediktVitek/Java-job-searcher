@@ -3,15 +3,12 @@ package benediktvitek.javajobsearcher.Utils.WebScrapers.SeleniumScrapers;
 import benediktvitek.javajobsearcher.Utils.Parsers.IndeedResponseParser;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class IndeedWebScraper extends SeleniumWebScraper {
@@ -31,13 +28,11 @@ public class IndeedWebScraper extends SeleniumWebScraper {
 
         List<WebElement> offerLinks = webDriver.findElements(By.cssSelector(".css-5lfssm.eu4oa1w0"));
         List<String> validOffers = new ArrayList<>();
-        if (!webDriver.findElements(By.id("onetrust-policy-text")).isEmpty()) {
-            WebElement button = webDriver.findElement(By.id("onetrust-reject-all-handler"));
-            wait.until(ExpectedConditions.elementToBeClickable(button));
-            button.click();
-        }
+
+
         for (WebElement singleOffer : offerLinks) {
             String description;
+            rejectCookies();
             wait.until(ExpectedConditions.elementToBeClickable(singleOffer));
             singleOffer.click();
             wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(OFFER_DESCRIPTION_CSS_ELEMENT)));
@@ -52,5 +47,14 @@ public class IndeedWebScraper extends SeleniumWebScraper {
             validOffers.add("No new offers found: https://cz.indeed.com");
         }
         return validOffers;
+    }
+
+    private void rejectCookies() {
+        if (!webDriver.findElements(By.id("onetrust-policy-text")).isEmpty()) {
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.id("onetrust-policy-text")));
+            WebElement rejectButton = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#onetrust-reject-all-handler")));
+            rejectButton.click();
+            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("onetrust-policy-text")));
+        }
     }
 }

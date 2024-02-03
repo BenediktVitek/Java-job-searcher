@@ -41,7 +41,7 @@ public class JobStackWebScraper extends HttpClientWebScraper {
         List<String> newOffers = jobStackOfferService.saveAndGetNewOffers(offerLinks);
         List<String> validOffers = new ArrayList<>();
         for (String offerUrl : newOffers) {
-            String parsedOffer = getPageView(offerUrl);
+            String parsedOffer = getPageView(DOMAIN + offerUrl);
             if (jobStackResponseParser.isSuitable(parsedOffer)) {
                 String message = jobStackResponseParser.buildMessage(parsedOffer, offerUrl);
                 validOffers.add(message);

@@ -32,4 +32,5 @@ public class JavaJobSearcherApplication implements CommandLineRunner {
             SeleniumWebDriverSingleton.closeWebDriver();
         }
     }
+
 }

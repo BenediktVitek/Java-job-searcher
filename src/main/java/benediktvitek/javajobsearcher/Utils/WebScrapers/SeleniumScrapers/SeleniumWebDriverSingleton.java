@@ -25,7 +25,7 @@ public class SeleniumWebDriverSingleton {
     private static void initializeWebDriver() {
         WebDriverManager.firefoxdriver().setup();
         FirefoxOptions options = new FirefoxOptions();
-        //options.addArguments("-headless");
+        options.addArguments("-headless");
         webDriver = new FirefoxDriver(options);
     }
 
