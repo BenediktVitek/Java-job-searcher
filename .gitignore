@@ -4,6 +4,7 @@
 *.bak
 *.tmp
 logs
+src/main/resources/tokens/**
 
 ### Mac OS
 .DS_Store

@@ -12,11 +12,10 @@ import java.util.List;
 @Component
 public class JobsCzWebScraper extends HttpClientWebScraper {
 
-    private final JobsCzResponseParser jobsCzResponseParser;
+    private final JobsCzResponseParser jobsCzResponseParser = (JobsCzResponseParser) responseParser;
 
     public JobsCzWebScraper(@Value("${jobscz.site.url}") String url, JobsCzResponseParser responseParser) {
         super(url, responseParser);
-        this.jobsCzResponseParser = responseParser;
     }
 
     @Override

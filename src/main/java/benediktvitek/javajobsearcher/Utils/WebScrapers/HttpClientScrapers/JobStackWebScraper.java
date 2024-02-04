@@ -13,7 +13,7 @@ import java.util.List;
 public class JobStackWebScraper extends HttpClientWebScraper {
 
     private final JobStackOfferService jobStackOfferService;
-    private final JobStackResponseParser jobStackResponseParser;
+    private final JobStackResponseParser jobStackResponseParser = (JobStackResponseParser) responseParser;
 
     private final String DOMAIN = "https://www.jobstack.it";
 
@@ -22,7 +22,6 @@ public class JobStackWebScraper extends HttpClientWebScraper {
                               JobStackResponseParser jobStackResponseParser) {
         super(url, jobStackResponseParser);
         this.jobStackOfferService = jobStackOfferService;
-        this.jobStackResponseParser = jobStackResponseParser;
     }
 
     protected List<String> getOfferLinks(String url) {

@@ -12,11 +12,11 @@ import java.util.List;
 
 public abstract class HttpClientWebScraper extends WebScraper {
 
-    private final ResponseParser jobstackResponseParser;
+    protected final ResponseParser responseParser;
 
     public HttpClientWebScraper(String url, ResponseParser responseParser) {
         super(url);
-        this.jobstackResponseParser = responseParser;
+        this.responseParser = responseParser;
     }
 
     protected abstract List<String> getOfferLinks(String url);
