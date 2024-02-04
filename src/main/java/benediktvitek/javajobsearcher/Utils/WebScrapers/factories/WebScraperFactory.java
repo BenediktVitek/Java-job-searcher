@@ -1,5 +1,6 @@
 package benediktvitek.javajobsearcher.Utils.WebScrapers.factories;
 
+import benediktvitek.javajobsearcher.Utils.WebScrapers.HttpClientScrapers.CocumaWebScraper;
 import benediktvitek.javajobsearcher.Utils.WebScrapers.SeleniumScrapers.GlassDoorsWebScraper;
 import benediktvitek.javajobsearcher.Utils.WebScrapers.HttpClientScrapers.JobStackWebScraper;
 import benediktvitek.javajobsearcher.Utils.WebScrapers.HttpClientScrapers.JobsCzWebScraper;
@@ -22,6 +23,8 @@ public class WebScraperFactory {
     private final JobsCzWebScraper jobsCzWebScraper;
 
     private final IndeedWebScraper indeedWebScraper;
+
+    private final CocumaWebScraper cocumaWebScraper;
     private final List<WebScraper> webScrapers = new ArrayList<>();
 
 
@@ -31,6 +34,7 @@ public class WebScraperFactory {
         webScrapers.add(glassDoorsWebScraper);
         webScrapers.add(jobsCzWebScraper);
         webScrapers.add(indeedWebScraper);
+        webScrapers.add(cocumaWebScraper);
     }
     public List<WebScraper> getWebScrapers() {
         return new ArrayList<>(webScrapers);

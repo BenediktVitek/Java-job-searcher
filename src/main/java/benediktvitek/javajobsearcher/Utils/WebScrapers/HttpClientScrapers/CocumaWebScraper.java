@@ -11,12 +11,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class CocumaWebScraper extends HttpClientWebScraper{
+public class CocumaWebScraper extends HttpClientWebScraper {
 
 
     private final CocumaOfferService cocumaOfferService;
+    private final String DOMAIN = "https://www.cocuma.cz";
 
     private final CocumaParser cocumaParser = (CocumaParser) responseParser;
+
     public CocumaWebScraper(@Value("${cocuma.site.url}") String url,
                             CocumaParser cocumaParser,
                             CocumaOfferService cocumaOfferService) {
@@ -27,11 +29,19 @@ public class CocumaWebScraper extends HttpClientWebScraper{
     @Override
     protected List<String> getOfferLinks(String url) {
         List<String> offers = new ArrayList<>();
-        return null;
+        String pageView = getPageView(url);
+        offers.addAll(cocumaParser.getOfferLinks(pageView));
+        String nextPageLink = cocumaParser.getNextPage(pageView);
+        if (nextPageLink != null) {
+            offers.addAll(getOfferLinks(DOMAIN + nextPageLink));
+        }
+        return offers;
     }
 
     @Override
     public List<String> getJobOffers() {
+        List<String> offers = getOfferLinks(URL);
+        System.out.println(offers.size());
         return null;
     }
 }
